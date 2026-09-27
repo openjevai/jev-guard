@@ -1,7 +1,8 @@
 /**
  * Minimal POST-JSON helper with the retry policy TypeSafe's docs recommend:
- * exponential backoff on 429 (rate limited) and 529 (overloaded). The official
- * SDKs do this for you; the raw adapters share this instead.
+ * exponential backoff on 429 (rate limited), 503 (OpenJEV unavailable) and 529
+ * (TypeSafe overloaded). The official SDKs do this for you; the raw adapters
+ * share this instead.
  */
 export async function postJson(
   url: string,
@@ -18,7 +19,7 @@ export async function postJson(
 
     if (res.ok) return res.json();
 
-    const retryable = res.status === 429 || res.status === 529;
+    const retryable = res.status === 429 || res.status === 503 || res.status === 529;
     if (retryable && attempt < maxAttempts) {
       await sleep(250 * 2 ** (attempt - 1));
       continue;

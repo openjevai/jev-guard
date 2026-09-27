@@ -6,6 +6,8 @@
 
 Every proposed tool call goes through one near-free Jev check (~70–500 ms) that returns typed risk decisions + calibrated confidence. Safe calls **allow**, clearly destructive ones **block**, uncertain ones **hold** for a human. Because Jev is ~free, you can afford to guard _every_ call — and because it's confidence-aware, uncertainty **fails safe**.
 
+> **OpenJEV support:** Jev is built by [TypeSafe](https://typesafe.ai). This fork keeps TypeSafe as the default and adds optional support for [OpenJEV](https://openjev.sh), a free community gateway to the same Jev model — set `OPENJEV_API_KEY` (or `JEV_PROVIDER=openjev`) to use it. Original project: https://github.com/CMaintz/jev-guard by @CMaintz.
+
 ```ts
 import { guard, score, noul, TypeSafeProvider } from 'jev-guard';
 
